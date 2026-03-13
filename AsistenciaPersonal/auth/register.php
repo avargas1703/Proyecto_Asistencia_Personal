@@ -10,9 +10,10 @@ if (isset($_SESSION["usuario_id"])) {
     <head>
         <meta charset="UTF-8">
         <title>Crear cuenta</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
     <body>
+        <div class="contenedor">
         <h1>Crear cuenta</h1>
 
         <form id="formRegistro">
@@ -95,5 +96,6 @@ if (isset($_SESSION["usuario_id"])) {
                 }
             });
         </script>
+        </div>
     </body>
 </html>

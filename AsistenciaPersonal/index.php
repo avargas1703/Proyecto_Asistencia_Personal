@@ -9,17 +9,20 @@ if (isset($_SESSION["usuario_id"])) {
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Asistencia Personal</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>Asistencia Personal</h1>
-  <p>Bienvenido. Inicia sesión o crea tu cuenta.</p>
+    <head>
+        <meta charset="UTF-8">
+        <title>Asistencia Personal</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="contenedor">
+            <h1>Asistencia Personal</h1>
+            <p>¡Bienvenido! <br> Inicia sesión o crea tu cuenta.</p>
 
-  <a href="auth/login.php">Iniciar sesión</a>
-  <br><br>
-  <a href="auth/register.php">Crear cuenta</a>
-</body>
+            <a href="auth/login.php">Iniciar sesión</a>
+            <br>
+            <a href="auth/register.php">Crear cuenta</a>
+        </div>
+
+    </body>
 </html>

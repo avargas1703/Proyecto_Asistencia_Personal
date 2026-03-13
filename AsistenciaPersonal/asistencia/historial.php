@@ -25,8 +25,10 @@ $historial = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
   <meta charset="UTF-8">
   <title>Historial de asistencia</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+    <div class="contenedor ancho">
   <h1>Historial de asistencia</h1>
 
   <p><strong>Usuario:</strong> <?php echo htmlspecialchars($correo); ?></p>
@@ -73,5 +75,6 @@ $historial = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <hr>
   <a href="asistencia.php">Volver</a> |
   <a href="../auth/logout.php">Cerrar sesión</a>
+    </div>
 </body>
 </html>

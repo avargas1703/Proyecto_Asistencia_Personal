@@ -87,8 +87,10 @@ if ($registroHoy) {
 <head>
   <meta charset="UTF-8">
   <title>Asistencia de hoy</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+    <div class="contenedor">
   <h1>Asistencia de hoy</h1>
 
   <p><strong>Usuario:</strong> <?php echo htmlspecialchars($correo); ?></p>
@@ -108,6 +110,7 @@ if ($registroHoy) {
     <?php echo $horaSalida ? htmlspecialchars($horaSalida) : "—"; ?>
   </p>
 
+  <div style="display: flex; gap: 10px;">
   <form method="POST" style="display:inline;">
     <input type="hidden" name="accion" value="entrada">
     <button type="submit" <?php echo $entradaHabilitada ? "" : "disabled"; ?>>
@@ -121,10 +124,12 @@ if ($registroHoy) {
       Marcar salida
     </button>
   </form>
+  </div>
 
   <hr>
 
   <a href="historial.php">Ver historial</a> |
   <a href="../auth/logout.php">Cerrar sesión</a>
+    </div>
 </body>
 </html>

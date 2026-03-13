@@ -10,16 +10,17 @@ if (isset($_SESSION["usuario_id"])) {
     <head>
         <meta charset="UTF-8">
         <title>Iniciar sesión</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="../style.css">
     </head>
     <body>
+        <div class="contenedor">
         <h1>Iniciar sesión</h1>
 
         <form id="formLogin">
-            <label>Correo</label><br>
+            <label><strong>Correo</strong></label><br>
             <input type="email" id="correo" required><br><br>
 
-            <label>Contraseña</label><br>
+            <label><strong>Contraseña</strong></label><br>
             <input type="password" id="password" required><br><br>
 
             <button type="submit">Entrar</button>
@@ -33,12 +34,12 @@ if (isset($_SESSION["usuario_id"])) {
             import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
             const firebaseConfig = {
-                apiKey: "AIzaSyCY_gZtET_Q3vLkosyoo61GQpIJYhV4qNc",
-                authDomain: "asistenciapersonal-fdb78.firebaseapp.com",
-                projectId: "asistenciapersonal-fdb78",
-                storageBucket: "asistenciapersonal-fdb78.firebasestorage.app",
-                messagingSenderId: "626440617732",
-                appId: "1:626440617732:web:1fb4be1e1a41ec447c9a51"
+                apiKey: "AIzaSyDJ5gXM3gAj7lIvnPXcyU8A_uDkL9Iksm4",
+                authDomain: "asistenciapersonal-8cf8e.firebaseapp.com",
+                projectId: "asistenciapersonal-8cf8e",
+                storageBucket: "asistenciapersonal-8cf8e.firebasestorage.app",
+                messagingSenderId: "238513813057",
+                appId: "1:238513813057:web:0d5c310ca167c81c7ab8c0"
             };
 
             const app = initializeApp(firebaseConfig);
@@ -82,5 +83,6 @@ if (isset($_SESSION["usuario_id"])) {
                 }
             });
         </script>
+        </div>
     </body>
 </html>
