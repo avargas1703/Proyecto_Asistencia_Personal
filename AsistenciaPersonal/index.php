@@ -12,6 +12,7 @@ if (isset($_SESSION["usuario_id"])) {
 <head>
   <meta charset="UTF-8">
   <title>Asistencia Personal</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Asistencia Personal</h1>
