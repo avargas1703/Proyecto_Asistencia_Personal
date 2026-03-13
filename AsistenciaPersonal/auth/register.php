@@ -10,6 +10,7 @@ if (isset($_SESSION["usuario_id"])) {
     <head>
         <meta charset="UTF-8">
         <title>Crear cuenta</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1>Crear cuenta</h1>

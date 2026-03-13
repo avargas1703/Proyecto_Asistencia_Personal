@@ -10,6 +10,7 @@ if (isset($_SESSION["usuario_id"])) {
     <head>
         <meta charset="UTF-8">
         <title>Iniciar sesión</title>
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <h1>Iniciar sesión</h1>
