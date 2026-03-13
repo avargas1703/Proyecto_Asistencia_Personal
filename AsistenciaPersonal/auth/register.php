@@ -14,88 +14,88 @@ if (isset($_SESSION["usuario_id"])) {
     </head>
     <body>
         <div class="contenedor">
-        <h1>Crear cuenta</h1>
+            <h1>Crear cuenta</h1>
 
-        <form id="formRegistro">
-            <label>Nombre</label><br>
-            <input type="text" id="nombre"><br><br>
+            <form id="formRegistro">
+                <label>Nombre</label><br>
+                <input type="text" id="nombre"><br><br>
 
-            <label>Correo</label><br>
-            <input type="email" id="correo" required><br><br>
+                <label>Correo</label><br>
+                <input type="email" id="correo" required><br><br>
 
-            <label>Contraseña</label><br>
-            <input type="password" id="password" required><br><br>
+                <label>Contraseña</label><br>
+                <input type="password" id="password" required><br><br>
 
-            <button type="submit">Crear cuenta</button>
-        </form>
+                <button type="submit">Crear cuenta</button>
+            </form>
 
-        <p id="mensaje"></p>
-        <a href="login.php">¿Ya tenés cuenta? Iniciar sesión</a>
+            <p id="mensaje"></p>
+            <a href="login.php">¿Ya tenés cuenta? Iniciar sesión</a>
 
-        <!-- Firebase SDK -->
-        <script type="module">
-            // 1) IMPORTS de Firebase
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-            import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+            <!-- Firebase SDK -->
+            <script type="module">
+                // 1) IMPORTS de Firebase
+                import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+                import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-            
-            const firebaseConfig = {
-                apiKey: "AIzaSyCY_gZtET_Q3vLkosyoo61GQpIJYhV4qNc",
-                authDomain: "asistenciapersonal-fdb78.firebaseapp.com",
-                projectId: "asistenciapersonal-fdb78",
-                storageBucket: "asistenciapersonal-fdb78.firebasestorage.app",
-                messagingSenderId: "626440617732",
-                appId: "1:626440617732:web:1fb4be1e1a41ec447c9a51"
-            };
 
-            // 3) Inicializar Firebase
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
+                const firebaseConfig = {
+                    apiKey: "AIzaSyCY_gZtET_Q3vLkosyoo61GQpIJYhV4qNc",
+                    authDomain: "asistenciapersonal-fdb78.firebaseapp.com",
+                    projectId: "asistenciapersonal-fdb78",
+                    storageBucket: "asistenciapersonal-fdb78.firebasestorage.app",
+                    messagingSenderId: "626440617732",
+                    appId: "1:626440617732:web:1fb4be1e1a41ec447c9a51"
+                };
 
-            // 4) Registro
-            const form = document.getElementById("formRegistro");
-            const mensaje = document.getElementById("mensaje");
+                // 3) Inicializar Firebase
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
 
-            form.addEventListener("submit", async (e) => {
-                e.preventDefault();
+                // 4) Registro
+                const form = document.getElementById("formRegistro");
+                const mensaje = document.getElementById("mensaje");
 
-                const nombre = document.getElementById("nombre").value.trim();
-                const correo = document.getElementById("correo").value.trim();
-                const password = document.getElementById("password").value;
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();
 
-                mensaje.textContent = "Creando cuenta...";
+                    const nombre = document.getElementById("nombre").value.trim();
+                    const correo = document.getElementById("correo").value.trim();
+                    const password = document.getElementById("password").value;
 
-                try {
-                    const cred = await createUserWithEmailAndPassword(auth, correo, password);
+                    mensaje.textContent = "Creando cuenta...";
 
-                    // cred.user.uid es el UID de Firebase
-                    const uid = cred.user.uid;
+                    try {
+                        const cred = await createUserWithEmailAndPassword(auth, correo, password);
 
-                    // Enviamos a PHP para crear sesion y guardar usuario en base de datos
-                    const resp = await fetch("auth_handler.php", {
-                        method: "POST",
-                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                        body: new URLSearchParams({
-                            accion: "register",
-                            uid: uid,
-                            correo: correo,
-                            nombre: nombre
-                        })
-                    });
+                        // cred.user.uid es el UID de Firebase
+                        const uid = cred.user.uid;
 
-                    const data = await resp.json();
+                        // Enviamos a PHP para crear sesion y guardar usuario en base de datos
+                        const resp = await fetch("auth_handler.php", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: new URLSearchParams({
+                                accion: "register",
+                                uid: uid,
+                                correo: correo,
+                                nombre: nombre
+                            })
+                        });
 
-                    if (data.ok) {
-                        window.location.href = "../asistencia/asistencia.php";
-                    } else {
-                        mensaje.textContent = data.error || "No se pudo crear la cuenta.";
+                        const data = await resp.json();
+
+                        if (data.ok) {
+                            window.location.href = "../asistencia/asistencia.php";
+                        } else {
+                            mensaje.textContent = data.error || "No se pudo crear la cuenta.";
+                        }
+
+                    } catch (err) {
+                        mensaje.textContent = "Error: " + err.message;
                     }
-
-                } catch (err) {
-                    mensaje.textContent = "Error: " + err.message;
-                }
-            });
-        </script>
+                });
+            </script>
         </div>
     </body>
 </html>
