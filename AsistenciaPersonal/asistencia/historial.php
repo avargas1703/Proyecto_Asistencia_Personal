@@ -15,6 +15,7 @@ if (!isset($_SESSION["usuario_id"])) {
 // Guardamos los datos del usuario que vienen desde la sesión
 $usuario_id = $_SESSION["usuario_id"];
 $correo = $_SESSION["correo"] ?? "";
+$nombre = $_SESSION["nombre"] ?? "";
 
 // Traer el historial del usuario
 // Aquí consultamos todas las asistencias que tiene este usuario
@@ -47,7 +48,7 @@ $historial = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <h1>Historial de asistencia</h1>
 
   <!-- Mostramos el correo del usuario -->
-  <p><strong>Usuario:</strong> <?php echo htmlspecialchars($correo); ?></p>
+  <p><strong>Usuario:</strong> <?php echo htmlspecialchars($nombre); ?></p>
 
   <!-- Tabla donde se mostrará el historial -->
   <table border="1" cellpadding="8" cellspacing="0">
