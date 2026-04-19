@@ -2,6 +2,8 @@
 // Iniciamos la sesión para poder usar los datos del usuario que ya inició sesión
 session_start();
 
+// CONFIGURACIÓN DE ZONA HORARIA: Vital para que coincida con Costa Rica (UTC-6)
+date_default_timezone_set('America/Costa_Rica');
 // Traemos la conexión a la base de datos
 require_once __DIR__ . "/../Database/connection.php";
 
@@ -18,8 +20,9 @@ $usuario_id = $_SESSION["usuario_id"];
 $correo = $_SESSION["correo"] ?? "";
 $nombre = $_SESSION["nombre"] ?? "";
 
-// Tomamos la fecha actual del servidor para trabajar la asistencia del día
-$hoy = date("Y-m-d");
+// Tomamos la fecha actual del servidor para trabajar la asistencia del día y se le agrega la fecha nueva del CR
+$hoy         = date("Y-m-d");
+$hora_actual = date("H:i:s");
 
 $mensaje = "";
 
@@ -37,27 +40,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Si la acción enviada fue "entrada"
     if ($accion === "entrada") {
-
-        // Si no existe un registro hoy, creamos uno nuevo con la hora de entrada actual
+  // Si no existe un registro hoy, creamos uno nuevo con la hora de entrada actual
         if (!$registro) {
-            $stmtIns = $pdo->prepare("INSERT INTO asistencias (usuario_id, fecha, hora_entrada) VALUES (?, ?, CURTIME())");
-            $stmtIns->execute([$usuario_id, $hoy]);
+            // se reemplaza CURTIME() por la variable de PHP $hora_actual
+            $stmtIns = $pdo->prepare("INSERT INTO asistencias (usuario_id, fecha, hora_entrada) VALUES (?, ?, ?)"); //JUSTO AQUI
+            $stmtIns->execute([$usuario_id, $hoy, $hora_actual]); //se le agrega el hora_actual
             $mensaje = "✅ Entrada registrada correctamente.";
-
-        } else {
+          } else {
             // Si ya existe un registro y ya tiene hora de entrada, no se permite volver a marcar entrada
             if (!empty($registro["hora_entrada"])) {
                 $mensaje = "⚠️ Ya tienes una entrada registrada hoy.";
             } else {
                 // Este sería un caso poco común:
                 // existe el registro del día pero todavía no tiene hora de entrada
-                $stmtUp = $pdo->prepare("UPDATE asistencias SET hora_entrada = CURTIME() WHERE id = ?");
-                $stmtUp->execute([$registro["id"]]);
+
+                $stmtUp = $pdo->prepare("UPDATE asistencias SET hora_entrada = ? WHERE id = ?"); //cambié el curtime por el ?
+                $stmtUp->execute([$hora_actual, $registro["id"]]);
                 $mensaje = "✅ Entrada registrada correctamente.";
             }
         }
 
-    // Si la acción enviada fue "salida"
+     // Si la acción enviada fue "salida"
     } elseif ($accion === "salida") {
 
         // No se puede marcar salida si no existe registro o si no hay entrada primero
@@ -69,8 +72,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $mensaje = "⚠️ Ya tienes una salida registrada hoy.";
             } else {
                 // Si sí hay entrada pero todavía no hay salida, actualizamos la hora de salida
-                $stmtUp = $pdo->prepare("UPDATE asistencias SET hora_salida = CURTIME() WHERE id = ?");
-                $stmtUp->execute([$registro["id"]]);
+
+                $stmtUp = $pdo->prepare("UPDATE asistencias SET hora_salida = ? WHERE id = ?"); //cambié el curtime por el ?
+                $stmtUp->execute([$hora_actual, $registro["id"]]); //se agrega además el hora actual
                 $mensaje = "✅ Salida registrada correctamente.";
             }
         }
@@ -169,6 +173,7 @@ if ($registroHoy) {
     </div>
 </body>
 </html>
+
 
 <!--
 Este archivo controla la asistencia diaria del usuario.

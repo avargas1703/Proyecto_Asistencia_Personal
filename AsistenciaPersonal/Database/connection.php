@@ -3,6 +3,8 @@
 // Datos de conexión a la base de datos
 // Aquí definimos el servidor, el nombre de la base de datos,
 // el usuario y la contraseña que se utilizarán para conectarse.
+date_default_timezone_set('America/Costa_Rica');
+
 
 $host = "localhost";
 $dbname = "asistencia_personal";
@@ -20,6 +22,7 @@ try {
     // Si ocurre un error en una consulta, PDO lanzará una excepción
     // Esto facilita detectar problemas durante la ejecución del sistema
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->exec("SET time_zone = '-06:00'");
 
 } catch (PDOException $e) {
 
